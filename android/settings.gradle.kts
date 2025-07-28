@@ -18,10 +18,10 @@ pluginManagement {
             resolutionStrategy {
             eachPlugin {
                 if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                    useVersion("1.8.20")
+                    useVersion("1.9.10")
                 }
                 if (requested.id.id.startsWith("com.android")) {
-                    useVersion("8.2.0")
+                    useVersion("8.10.1")
                 }
             }
         }
@@ -33,9 +33,9 @@ pluginManagement {
 
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
-    id("com.android.application") version "8.2.0" apply false
+    id("com.android.application") version "8.10.1" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.10" apply false
 }
 
 include(":app")
@@ -49,8 +49,8 @@ dependencyResolutionManagement {
     
     versionCatalogs {
         create("libs") {
-            version("kotlin", "1.8.20")
-            version("agp", "8.2.0")
+            version("kotlin", "1.9.10")
+            version("agp", "8.10.1")
             version("firebase-bom", "32.7.1")
             version("androidx-core", "1.12.0")
         }
@@ -58,5 +58,5 @@ dependencyResolutionManagement {
 }
 
 gradle.rootProject {
-    project.extra["embeddedKotlinVersion"] = "1.8.20"
+    project.extra["embeddedKotlinVersion"] = "1.9.10"
 }
