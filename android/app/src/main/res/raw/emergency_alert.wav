@@ -1,0 +1,3 @@
+# This is a placeholder for the emergency alert sound file
+# You should replace this with an actual .wav file for emergency alerts
+# The file should be placed in android/app/src/main/res/raw/emergency_alert.wav 

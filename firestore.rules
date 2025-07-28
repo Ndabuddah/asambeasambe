@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read and write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Drivers can read and write their own driver profile
+    match /drivers/{driverId} {
+      allow read, write: if request.auth != null && request.auth.uid == driverId;
+    }
+    
+    // Rides - passengers can read/write their own rides, drivers can read available rides
+    match /rides/{rideId} {
+      allow read: if request.auth != null && (
+        resource.data.passengerId == request.auth.uid ||
+        resource.data.driverId == request.auth.uid ||
+        (resource.data.status == 0 && request.auth.uid in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isDriver == true)
+      );
+      allow create: if request.auth != null && request.auth.uid == resource.data.passengerId;
+      allow update: if request.auth != null && (
+        request.auth.uid == resource.data.passengerId ||
+        request.auth.uid == resource.data.driverId
+      );
+    }
+  }
+}
