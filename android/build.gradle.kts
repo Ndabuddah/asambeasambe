@@ -4,8 +4,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.2.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
+        classpath("com.android.tools.build:gradle:8.10.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
         classpath("com.google.gms:google-services:4.4.0")
     }
 }
@@ -34,9 +34,9 @@ allprojects {
             force("androidx.tracing:tracing-ktx:1.1.0")
             
             // Force all Kotlin dependencies to use the same version
-            eachDependency { details: DependencyResolveDetails ->
-                if (details.requested.group == "org.jetbrains.kotlin") {
-                    details.useVersion("1.8.20")
+            eachDependency {
+                if (requested.group == "org.jetbrains.kotlin") {
+                    useVersion("1.9.10")
                 }
             }
         }

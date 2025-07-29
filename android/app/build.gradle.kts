@@ -101,14 +101,14 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.20")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.20")
     implementation("androidx.multidex:multidex:2.0.1")
-    implementation("androidx.window:window:1.1.0")
-    implementation("androidx.window:window-java:1.1.0")
+    implementation("androidx.window:window:1.4.0")
+    implementation("androidx.window:window-java:1.4.0")
     
     // Force specific versions to avoid SDK 35 requirements
     constraints {
@@ -124,14 +124,14 @@ dependencies {
 configurations.all {
     resolutionStrategy {
         // Force all Kotlin dependencies to use the same version
-        eachDependency { details: DependencyResolveDetails ->
-            if (details.requested.group == "org.jetbrains.kotlin") {
-                details.useVersion("1.8.20")
+        eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion("1.9.10")
             }
         }
         // Force Firebase dependencies to use compatible Kotlin version
-        force("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
-        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20")
-        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20")
+        force("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.10")
     }
 }
