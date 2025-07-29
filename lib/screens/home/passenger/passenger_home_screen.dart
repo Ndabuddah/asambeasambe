@@ -120,8 +120,8 @@ class _PassengerHomeScreenState extends State<PassengerHomeScreen> with TickerPr
   }
 
   Future<void> _checkLocationPermissions() async {
-    final allGranted = await PermissionService.areAllPermissionsGranted();
-    if (!allGranted && mounted) {
+    final shouldShow = await PermissionService.shouldShowPermissionScreen();
+    if (shouldShow && mounted) {
       // Show permission screen as a modal
       await showDialog(
         context: context,
@@ -359,12 +359,8 @@ class _PassengerHomeScreenState extends State<PassengerHomeScreen> with TickerPr
                         child: CircleAvatar(
                           radius: 20,
                           backgroundColor: Colors.white,
-                          backgroundImage: (_currentUser?.profileImageUrl != null && _currentUser!.profileImageUrl!.isNotEmpty)
-                              ? NetworkImage(_currentUser!.profileImageUrl!)
-                              : null,
-                          child: (_currentUser?.profileImageUrl == null || _currentUser!.profileImageUrl!.isEmpty)
-                              ? Icon(Icons.person_outline, color: AppColors.primary, size: 24)
-                              : null,
+                          backgroundImage: (_currentUser?.profileImageUrl != null && _currentUser!.profileImageUrl!.isNotEmpty) ? NetworkImage(_currentUser!.profileImageUrl!) : null,
+                          child: (_currentUser?.profileImageUrl == null || _currentUser!.profileImageUrl!.isEmpty) ? Icon(Icons.person_outline, color: AppColors.primary, size: 24) : null,
                         ),
                       ),
                     ],

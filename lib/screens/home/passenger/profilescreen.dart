@@ -188,6 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
 
     return Scaffold(
       backgroundColor: AppColors.getBackgroundColor(isDark),
+      resizeToAvoidBottomInset: true, // Ensure proper keyboard handling
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -559,6 +560,9 @@ class _ProfileField extends StatelessWidget {
             focusNode: focusNode,
             enabled: isEnabled,
             validator: validator,
+            enableInteractiveSelection: true,
+            autocorrect: false,
+            enableSuggestions: false,
             style: TextStyle(
               color: AppColors.getTextPrimaryColor(isDark),
               fontSize: 16,
@@ -575,6 +579,12 @@ class _ProfileField extends StatelessWidget {
                 vertical: 16,
               ),
             ),
+            onTap: () {
+              // Ensure proper focus handling
+              if (!focusNode.hasFocus) {
+                focusNode.requestFocus();
+              }
+            },
           ),
         ),
       ],

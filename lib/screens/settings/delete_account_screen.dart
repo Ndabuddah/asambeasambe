@@ -534,6 +534,9 @@ class _ReasonSelectionBottomSheetState extends State<_ReasonSelectionBottomSheet
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _customReasonController,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       labelText: 'Please specify your reason',
                       hintText: 'Enter your reason for deleting account...',
@@ -650,6 +653,9 @@ class _PasswordVerificationBottomSheet extends StatelessWidget {
                   TextFormField(
                     controller: passwordController,
                     obscureText: obscurePassword,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: const Icon(Icons.lock_outline),
@@ -676,6 +682,9 @@ class _PasswordVerificationBottomSheet extends StatelessWidget {
                   TextFormField(
                     controller: confirmPasswordController,
                     obscureText: obscureConfirmPassword,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       prefixIcon: const Icon(Icons.lock_outline),

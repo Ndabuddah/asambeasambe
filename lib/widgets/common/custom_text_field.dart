@@ -16,6 +16,8 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final int maxLines;
   final bool readOnly;
+  final FocusNode? focusNode;
+  final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
@@ -31,6 +33,8 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.maxLines = 1,
     this.readOnly = false,
+    this.focusNode,
+    this.onTap,
   });
 
   @override
@@ -52,6 +56,7 @@ class CustomTextField extends StatelessWidget {
           ),
         TextFormField(
           controller: controller,
+          focusNode: focusNode,
           obscureText: obscureText,
           keyboardType: keyboardType,
           validator: validator,
@@ -59,25 +64,28 @@ class CustomTextField extends StatelessWidget {
           maxLines: maxLines,
           style: TextStyle(color: Colors.white),
           readOnly: readOnly,
+          enableInteractiveSelection: true,
+          autocorrect: false,
+          enableSuggestions: false,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(color: AppTheme.greyText),
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppTheme.greyText) : null,
+            hintStyle: TextStyle(color: AppColors.textMuted),
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.textMuted) : null,
             suffixIcon: suffixIcon != null
                 ? IconButton(
-                    icon: Icon(suffixIcon, color: AppTheme.greyText),
+                    icon: Icon(suffixIcon, color: AppColors.textMuted),
                     onPressed: onSuffixIconPressed,
                   )
                 : null,
             filled: true,
-            fillColor: AppTheme.darkerBackground,
+            fillColor: AppColors.darkCard,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.transparent),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppTheme.primaryColor),
+              borderSide: BorderSide(color: AppColors.primary),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -89,6 +97,13 @@ class CustomTextField extends StatelessWidget {
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           ),
+          onTap: onTap ?? () {
+            // Ensure proper focus handling
+            final node = focusNode;
+            if (node != null && !node.hasFocus) {
+              node.requestFocus();
+            }
+          },
         ),
       ],
     );

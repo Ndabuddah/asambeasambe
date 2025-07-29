@@ -77,6 +77,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Ticker
                 Expanded(
                   child: TextField(
                     controller: _searchController,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       hintText: 'Search...',
                       prefixIcon: const Icon(Icons.search),
@@ -824,6 +827,9 @@ class _PricingConfigCard extends StatelessWidget {
                       const Text('Base Fare (R)'),
                       const SizedBox(height: 8),
                       TextField(
+                        enableInteractiveSelection: true,
+                        autocorrect: false,
+                        enableSuggestions: false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '25.00',
@@ -840,6 +846,9 @@ class _PricingConfigCard extends StatelessWidget {
                       const Text('Per Km Rate (R)'),
                       const SizedBox(height: 8),
                       TextField(
+                        enableInteractiveSelection: true,
+                        autocorrect: false,
+                        enableSuggestions: false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '6.50',

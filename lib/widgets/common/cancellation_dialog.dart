@@ -174,6 +174,9 @@ class _CancellationDialogState extends State<CancellationDialog> {
                       const SizedBox(height: 12),
                       TextField(
                         controller: customReasonController,
+                        enableInteractiveSelection: true,
+                        autocorrect: false,
+                        enableSuggestions: false,
                         decoration: InputDecoration(
                           hintText: 'Enter your reason...',
                           border: OutlineInputBorder(

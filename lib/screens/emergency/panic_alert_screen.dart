@@ -373,6 +373,9 @@ class _PanicAlertScreenState extends State<PanicAlertScreen> with TickerProvider
                     child: TextField(
                       controller: _passwordController,
                       obscureText: true,
+                      enableInteractiveSelection: true,
+                      autocorrect: false,
+                      enableSuggestions: false,
                       decoration: const InputDecoration(
                         hintText: 'Enter your password',
                         border: InputBorder.none,

@@ -386,15 +386,26 @@ class _DriverSignupScreenState extends State<DriverSignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true, // Ensure proper keyboard handling
       appBar: AppBar(
         title: const Text('Driver Registration'),
         centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
+      body: GestureDetector(
+        onTap: () {
+          // Dismiss keyboard when tapping outside
+          FocusScope.of(context).unfocus();
+        },
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 16,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 16, // Account for keyboard
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -738,11 +749,11 @@ class _DriverSignupScreenState extends State<DriverSignupScreen> {
                 ),
               ),
             ),
-          ),
+
           if (_isLoading) const LoadingIndicator(),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildVehicleTypeOption(String type, String label) {

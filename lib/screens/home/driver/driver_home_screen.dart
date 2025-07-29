@@ -155,8 +155,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> with TickerProvider
   }
 
   Future<void> _checkLocationPermissions() async {
-    final allGranted = await PermissionService.areAllPermissionsGranted();
-    if (!allGranted && mounted) {
+    final shouldShow = await PermissionService.shouldShowPermissionScreen();
+    if (shouldShow && mounted) {
       // Show permission screen as a modal
       await showDialog(
         context: context,

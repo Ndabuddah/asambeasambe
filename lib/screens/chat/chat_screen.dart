@@ -143,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   return Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return Center(child: Text('No messages yet', style: TextStyle(color: AppTheme.greyText)));
+                  return Center(child: Text('No messages yet', style: TextStyle(color: AppColors.textMuted)));
                 }
                 final messages = snapshot.data!.docs
                     .map((doc) => MessageModel.fromDocument(doc))
@@ -171,10 +171,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     controller: _messageController,
                     minLines: 1,
                     maxLines: 5,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       hintText: 'Type a message...',
                       filled: true,
-                      fillColor: isDark ? AppTheme.darkerBackground : Colors.grey[100],
+                      fillColor: isDark ? AppColors.darkCard : Colors.grey[100],
                       contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),

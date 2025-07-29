@@ -22,7 +22,7 @@ class AppStyles {
 
   // Button Styles
   static final ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: AppTheme.primaryColor,
+    backgroundColor: AppColors.primary,
     foregroundColor: Colors.white,
     padding: EdgeInsets.symmetric(vertical: 16),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -30,14 +30,14 @@ class AppStyles {
   );
 
   static final ButtonStyle secondaryButtonStyle = OutlinedButton.styleFrom(
-    foregroundColor: AppTheme.primaryColor,
-    side: BorderSide(color: AppTheme.primaryColor),
+    foregroundColor: AppColors.primary,
+    side: BorderSide(color: AppColors.primary),
     padding: EdgeInsets.symmetric(vertical: 16),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
   );
 
   static final ButtonStyle textButtonStyle = TextButton.styleFrom(
-    foregroundColor: AppTheme.primaryColor,
+    foregroundColor: AppColors.primary,
     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
   );
 
@@ -65,7 +65,7 @@ class AppStyles {
   static const TextStyle captionStyle = TextStyle(
     fontSize: fontSizeSmall,
     fontWeight: fontWeightRegular,
-    color: AppTheme.greyText,
+    color: AppColors.textMuted,
   );
 
   // Input Decoration
@@ -76,11 +76,11 @@ class AppStyles {
   }) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle: TextStyle(color: AppTheme.greyText),
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppTheme.greyText) : null,
+      hintStyle: TextStyle(color: AppColors.textMuted),
+      prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.textMuted) : null,
       suffix: suffix,
       filled: true,
-      fillColor: AppTheme.darkerBackground,
+      fillColor: AppColors.darkCard,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
@@ -91,11 +91,11 @@ class AppStyles {
 
   // Card Decoration
   static BoxDecoration cardDecoration = BoxDecoration(
-    color: AppTheme.darkerBackground,
+    color: AppColors.darkCard,
     borderRadius: BorderRadius.circular(16),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.1),
+        color: Colors.black.withValues(alpha: 0.1),
         blurRadius: 10,
         spreadRadius: 0,
         offset: Offset(0, 4),

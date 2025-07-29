@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:rideapp/services/permission_service.dart';
 import 'package:rideapp/constants/app_colors.dart';
+import 'package:rideapp/services/permission_service.dart';
 import 'package:rideapp/widgets/common/custom_button.dart';
 
 class LocationPermissionScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
 
   Future<void> _requestLocationPermission() async {
     setState(() => _isLoading = true);
-    
+
     try {
       final granted = await PermissionService.requestLocationPermission();
       if (granted) {
@@ -58,7 +58,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
 
   Future<void> _requestBackgroundLocationPermission() async {
     setState(() => _isLoading = true);
-    
+
     try {
       final granted = await PermissionService.requestBackgroundLocationPermission();
       if (granted) {
@@ -109,7 +109,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   @override
   Widget build(BuildContext context) {
     final isAllGranted = _locationGranted && _backgroundLocationGranted && _locationServiceEnabled;
-    
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SafeArea(
@@ -118,7 +118,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
           child: Column(
             children: [
               const SizedBox(height: 40),
-              
+
               // Header
               Icon(
                 Icons.location_on,
@@ -126,7 +126,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                 color: Colors.white,
               ),
               const SizedBox(height: 24),
-              
+
               Text(
                 'Location Permission Required',
                 style: TextStyle(
@@ -137,20 +137,18 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              
+
               Text(
-                widget.isDriver 
-                  ? 'As a driver, we need your location to help passengers find you and track your rides.'
-                  : 'As a passenger, we need your location to find nearby drivers and track your ride.',
+                widget.isDriver ? 'As a driver, we need your location to help passengers find you and track your rides.' : 'As a passenger, we need your location to find nearby drivers and track your ride.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white.withOpacity(0.9),
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               const SizedBox(height: 40),
-              
+
               // Permission Status Cards
               Expanded(
                 child: Container(
@@ -172,7 +170,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      
+
                       // Location Services Status
                       _buildPermissionCard(
                         icon: Icons.location_on,
@@ -184,9 +182,9 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                         buttonText: 'Open Settings',
                         showSettingsButton: false,
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       // Location Permission Status
                       _buildPermissionCard(
                         icon: Icons.my_location,
@@ -198,25 +196,25 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                         buttonText: 'Grant Permission',
                         showSettingsButton: false,
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       // Background Location Permission Status
                       _buildPermissionCard(
                         icon: Icons.location_searching,
                         title: 'Background Location',
                         description: widget.isDriver
-                          ? 'Allow location access when app is in background to receive ride requests'
-                          : 'Allow location access when app is in background to track your ride',
+                            ? 'Essential for receiving ride requests when app is minimized. Without this, you won\'t get notified of new ride requests when the app is in background.'
+                            : 'Essential for tracking your ride progress and ensuring driver can find you. Without this, ride tracking will stop when app is minimized.',
                         isGranted: _backgroundLocationGranted,
                         onTap: _backgroundLocationGranted ? null : _requestBackgroundLocationPermission,
                         showButton: !_backgroundLocationGranted && _locationGranted,
                         buttonText: 'Grant Permission',
                         showSettingsButton: false,
                       ),
-                      
+
                       const SizedBox(height: 24),
-                      
+
                       // Privacy Notice
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -249,7 +247,9 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                               '• Your location is only used to provide ride services\n'
                               '• Location data is encrypted and securely transmitted\n'
                               '• We do not sell or share your location data\n'
-                              '• You can revoke permissions anytime in settings',
+                              '• You can revoke permissions anytime in settings\n'
+                              '• Background location only works when actively using the app\n'
+                              '• Location sharing stops immediately when ride ends',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
@@ -258,9 +258,78 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                           ],
                         ),
                       ),
-                      
+
                       const Spacer(),
-                      
+
+                      // Don't Ask Again Option
+                      if (!isAllGranted)
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Can\'t use the app without location permissions',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[700],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Location access is essential for ride services. You can enable permissions later in Settings.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[600],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        await PermissionService.setDontAskAgain();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Don\'t Ask Again',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Maybe Later',
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
                       // Continue Button
                       if (isAllGranted)
                         SizedBox(
@@ -345,21 +414,21 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
             TextButton(
               onPressed: _isLoading ? null : onTap,
               child: _isLoading
-                ? SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ? SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                      ),
+                    )
+                  : Text(
+                      buttonText,
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
-                : Text(
-                    buttonText,
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
             ),
           if (showSettingsButton && !isGranted)
             TextButton(
@@ -382,4 +451,4 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
       ),
     );
   }
-} 
+}

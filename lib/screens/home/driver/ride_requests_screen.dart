@@ -316,6 +316,9 @@ class _AnimatedAutocompleteFieldState extends State<_AnimatedAutocompleteField> 
         TextField(
           controller: _controller,
           onChanged: widget.onChanged,
+          enableInteractiveSelection: true,
+          autocorrect: false,
+          enableSuggestions: false,
           style: TextStyle(color: AppColors.getTextPrimaryColor(isDark)),
           decoration: InputDecoration(
             prefixIcon: Icon(widget.icon, color: widget.color),

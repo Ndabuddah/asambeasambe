@@ -25,7 +25,7 @@ class LoadingIndicator extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CircularProgressIndicator(
-              color: color ?? AppTheme.primaryColor,
+              color: color ?? AppColors.primary,
             ),
             if (message != null)
               Padding(
@@ -74,7 +74,7 @@ class UserAvatar extends StatelessWidget {
           shape: BoxShape.circle,
           border: borderWidth > 0
               ? Border.all(
-                  color: borderColor ?? AppTheme.primaryColor,
+                  color: borderColor ?? AppColors.primary,
                   width: borderWidth,
                 )
               : null,
@@ -101,7 +101,7 @@ class UserAvatar extends StatelessWidget {
             if (loadingProgress == null) return child;
             return Center(
               child: CircularProgressIndicator(
-                color: AppTheme.primaryColor,
+                color: AppColors.primary,
                 value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
               ),
             );
@@ -158,8 +158,8 @@ class UserAvatar extends StatelessWidget {
       Colors.purpleAccent,
       Colors.orangeAccent,
       Colors.tealAccent,
-      AppTheme.primaryColor,
-      AppTheme.secondaryColor,
+              AppColors.primary,
+        AppColors.secondary,
     ];
 
     // Simple hash function to get a stable index

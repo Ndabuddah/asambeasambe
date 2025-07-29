@@ -9,6 +9,7 @@ import '../../services/auth_service.dart';
 import '../../services/database_service.dart';
 import '../../services/network_service.dart';
 import '../../widgets/common/modern_alert_dialog.dart';
+import '../../widgets/common/keyboard_safe_wrapper.dart';
 import 'email_verification_screen.dart';
 import 'login_screen.dart';
 
@@ -19,7 +20,7 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMixin {
+class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMixin, KeyboardSafeMixin {
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -250,6 +251,7 @@ class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMix
 
     return Scaffold(
       backgroundColor: AppColors.getBackgroundColor(isDark),
+      resizeToAvoidBottomInset: true, // Ensure proper keyboard handling
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -262,11 +264,29 @@ class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMix
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+        child: GestureDetector(
+          onTap: () {
+            // Dismiss keyboard when tapping outside
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: EdgeInsets.only(
+              left: 24,
+              right: 24,
+              top: 24,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 24, // Account for keyboard
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height - 
+                          MediaQuery.of(context).padding.top - 
+                          MediaQuery.of(context).padding.bottom - 100, // Account for AppBar
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
               // Header Section
               FadeTransition(
                 opacity: _fadeAnimation,
@@ -542,6 +562,7 @@ class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMix
                             ),
                           ],
                         ),
+                        const Spacer(), // Add spacer to push content to top when keyboard is open
                       ],
                     ),
                   ),
@@ -551,8 +572,8 @@ class _SignupScreenState extends State<SignupScreen> with TickerProviderStateMix
           ),
         ),
       ),
-    );
-  }
+
+    ))));}
 }
 
 class _ModernTextField extends StatelessWidget {
@@ -618,6 +639,9 @@ class _ModernTextField extends StatelessWidget {
             obscureText: obscureText,
             keyboardType: keyboardType,
             validator: validator,
+            enableInteractiveSelection: true,
+            autocorrect: false,
+            enableSuggestions: false,
             style: TextStyle(
               color: AppColors.getTextPrimaryColor(isDark),
               fontSize: 16,
@@ -640,6 +664,12 @@ class _ModernTextField extends StatelessWidget {
                 vertical: 16,
               ),
             ),
+            onTap: () {
+              // Ensure proper focus handling
+              if (!focusNode.hasFocus) {
+                focusNode.requestFocus();
+              }
+            },
           ),
         ),
       ],

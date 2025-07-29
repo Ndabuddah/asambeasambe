@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PermissionService {
   static const String _locationPermissionKey = 'location_permission_explained';
   static const String _backgroundLocationPermissionKey = 'background_location_permission_explained';
+  static const String _dontAskAgainKey = 'location_permission_dont_ask_again';
 
   // Check if location permission is granted
   static Future<bool> isLocationPermissionGranted() async {
@@ -50,12 +51,16 @@ class PermissionService {
   // Check if we should show permission explanation
   static Future<bool> shouldShowLocationPermissionExplanation() async {
     final prefs = await SharedPreferences.getInstance();
+    final dontAskAgain = prefs.getBool(_dontAskAgainKey) ?? false;
+    if (dontAskAgain) return false;
     return !(prefs.getBool(_locationPermissionKey) ?? false);
   }
 
   // Check if we should show background location permission explanation
   static Future<bool> shouldShowBackgroundLocationPermissionExplanation() async {
     final prefs = await SharedPreferences.getInstance();
+    final dontAskAgain = prefs.getBool(_dontAskAgainKey) ?? false;
+    if (dontAskAgain) return false;
     return !(prefs.getBool(_backgroundLocationPermissionKey) ?? false);
   }
 
@@ -69,6 +74,18 @@ class PermissionService {
   static Future<void> markBackgroundLocationPermissionExplained() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_backgroundLocationPermissionKey, true);
+  }
+
+  // Mark as "don't ask again"
+  static Future<void> setDontAskAgain() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_dontAskAgainKey, true);
+  }
+
+  // Reset "don't ask again" (useful for testing or user changes mind)
+  static Future<void> resetDontAskAgain() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_dontAskAgainKey, false);
   }
 
   // Get comprehensive permission status
@@ -90,5 +107,15 @@ class PermissionService {
     return status['locationGranted'] == true && 
            status['backgroundLocationGranted'] == true && 
            status['locationServiceEnabled'] == true;
+  }
+
+  // Check if we should show permission screen (considers "don't ask again")
+  static Future<bool> shouldShowPermissionScreen() async {
+    final allGranted = await areAllPermissionsGranted();
+    if (allGranted) return false;
+    
+    final prefs = await SharedPreferences.getInstance();
+    final dontAskAgain = prefs.getBool(_dontAskAgainKey) ?? false;
+    return !dontAskAgain;
   }
 } 

@@ -81,6 +81,9 @@ class LocationInput extends StatelessWidget {
                   controller: controller,
                   focusNode: focusNode,
                   onChanged: onChanged,
+                  enableInteractiveSelection: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
                   style: TextStyle(
                     fontSize: 16,
                     color: AppColors.getTextPrimaryColor(isDark),
@@ -94,6 +97,12 @@ class LocationInput extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
+                  onTap: () {
+                    // Ensure proper focus handling
+                    if (!focusNode.hasFocus) {
+                      focusNode.requestFocus();
+                    }
+                  },
                 ),
               ),
             ],

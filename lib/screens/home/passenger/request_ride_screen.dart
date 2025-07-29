@@ -1678,6 +1678,7 @@ class _RequestRideScreenState extends State<RequestRideScreen> with TickerProvid
     final isDark = themeProvider.isDarkMode;
     return Scaffold(
       backgroundColor: AppColors.getBackgroundColor(isDark),
+      resizeToAvoidBottomInset: true, // Ensure proper keyboard handling
       body: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -1769,6 +1770,9 @@ class _RequestRideScreenState extends State<RequestRideScreen> with TickerProvid
                   ),
                   TextField(
                     controller: _pickupController,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       labelText: 'Pickup Location',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.getTextSecondaryColor(isDark)),
@@ -1793,6 +1797,9 @@ class _RequestRideScreenState extends State<RequestRideScreen> with TickerProvid
                   const SizedBox(height: 15),
                   TextField(
                     controller: _dropoffController,
+                    enableInteractiveSelection: true,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                       labelText: 'Dropoff Location',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.getTextSecondaryColor(isDark)),

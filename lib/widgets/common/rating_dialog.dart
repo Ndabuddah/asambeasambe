@@ -186,6 +186,9 @@ class _RatingDialogState extends State<RatingDialog> {
               TextField(
                 controller: notesController,
                 maxLines: 3,
+                enableInteractiveSelection: true,
+                autocorrect: false,
+                enableSuggestions: false,
                 decoration: InputDecoration(
                   hintText: 'Share your experience...',
                   border: OutlineInputBorder(
@@ -224,6 +227,9 @@ class _RatingDialogState extends State<RatingDialog> {
                 const SizedBox(height: 12),
                 TextField(
                   controller: customReportController,
+                  enableInteractiveSelection: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
                   decoration: InputDecoration(
                     hintText: 'Please specify the issue...',
                     border: OutlineInputBorder(

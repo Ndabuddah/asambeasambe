@@ -289,6 +289,9 @@ class _PanicSettingsScreenState extends State<PanicSettingsScreen> {
                           const SizedBox(height: 16),
                           TextField(
                             controller: _nameController,
+                            enableInteractiveSelection: true,
+                            autocorrect: false,
+                            enableSuggestions: false,
                             decoration: InputDecoration(
                               labelText: 'Contact Name',
                               hintText: 'Enter full name',
@@ -301,6 +304,9 @@ class _PanicSettingsScreenState extends State<PanicSettingsScreen> {
                           const SizedBox(height: 16),
                           TextField(
                             controller: _emailController,
+                            enableInteractiveSelection: true,
+                            autocorrect: false,
+                            enableSuggestions: false,
                             decoration: InputDecoration(
                               labelText: 'Email Address',
                               hintText: 'Enter email address',

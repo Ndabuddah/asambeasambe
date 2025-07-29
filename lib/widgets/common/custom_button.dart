@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor = color ?? AppTheme.primaryColor;
+    final buttonColor = color ?? AppColors.primary;
 
     if (isOutlined) {
       return OutlinedButton(

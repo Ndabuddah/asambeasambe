@@ -125,7 +125,7 @@ class _PassengerRegistrationScreenState extends State<PassengerRegistrationScree
                 controller: _nameController,
                 label: 'Full Name',
                 hintText: 'Enter your name',
-                validator: (value) => value!.isEmpty ? 'Please enter your name' : null,
+                                        validator: (value) => value == null || value.isEmpty ? 'Please enter your name' : null,
               ),
               const SizedBox(height: 16),
               CustomTextField(
@@ -133,7 +133,7 @@ class _PassengerRegistrationScreenState extends State<PassengerRegistrationScree
                 label: 'Phone Number',
                 hintText: 'Enter your phone number',
                 keyboardType: TextInputType.phone,
-                validator: (value) => value!.isEmpty ? 'Please enter your phone number' : null,
+                                        validator: (value) => value == null || value.isEmpty ? 'Please enter your phone number' : null,
               ),
               const SizedBox(height: 32),
               const Text(
