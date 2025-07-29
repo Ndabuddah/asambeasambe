@@ -429,43 +429,47 @@ class _LoginScreenState extends State<LoginScreen>
                                   TextButton(
                                     onPressed: () async {
                                       final emailController = TextEditingController(text: _emailController.text);
-                                      final result = await showDialog<String>(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text('Reset Password'),
-                                          content: TextField(
-                                            controller: emailController,
-                                            keyboardType: TextInputType.emailAddress,
-                                            decoration: const InputDecoration(
-                                              labelText: 'Enter your email',
+                                      try {
+                                        final result = await showDialog<String>(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('Reset Password'),
+                                            content: TextField(
+                                              controller: emailController,
+                                              keyboardType: TextInputType.emailAddress,
+                                              decoration: const InputDecoration(
+                                                labelText: 'Enter your email',
+                                              ),
                                             ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.of(context).pop(),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () => Navigator.of(context).pop(emailController.text.trim()),
+                                                child: const Text('Send Reset Link'),
+                                              ),
+                                            ],
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.of(context).pop(),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () => Navigator.of(context).pop(emailController.text.trim()),
-                                              child: const Text('Send Reset Link'),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                      if (result != null && result.isNotEmpty) {
-                                        try {
-                                          await Provider.of<AuthService>(context, listen: false).resetPassword(result);
-                                          ModernSnackBar.show(
-                                            context,
-                                            message: 'Password reset email sent! Check your inbox.',
-                                          );
-                                        } catch (e) {
-                                          ModernSnackBar.show(
-                                            context,
-                                            message: 'Failed to send reset email: ${e.toString()}',
-                                            isError: true,
-                                          );
+                                        );
+                                        if (result != null && result.isNotEmpty) {
+                                          try {
+                                            await Provider.of<AuthService>(context, listen: false).resetPassword(result);
+                                            ModernSnackBar.show(
+                                              context,
+                                              message: 'Password reset email sent! Check your inbox.',
+                                            );
+                                          } catch (e) {
+                                            ModernSnackBar.show(
+                                              context,
+                                              message: 'Failed to send reset email: ${e.toString()}',
+                                              isError: true,
+                                            );
+                                          }
                                         }
+                                      } finally {
+                                        emailController.dispose();
                                       }
                                     },
                                     child: Text(
