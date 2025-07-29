@@ -12,7 +12,24 @@
           "package_name": "com.rideapp.mobile"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "865618939896-cc73ecac71da4bd05ae175fbd73e5eac0542df57.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rideapp.mobile",
+            "certificate_hash": "cc73ecac71da4bd05ae175fbd73e5eac0542df57"
+          }
+        },
+        {
+          "client_id": "865618939896-977fa1341109f522c1dc751770b9101965eb7517.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rideapp.mobile",
+            "certificate_hash": "977fa1341109f522c1dc751770b9101965eb7517"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAl460a9RVG5IaAsgjTJA_bkUHTfkjqCVc"
