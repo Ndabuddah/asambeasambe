@@ -291,6 +291,13 @@ class _AnimatedAutocompleteField extends StatefulWidget {
 
 class _AnimatedAutocompleteFieldState extends State<_AnimatedAutocompleteField> {
   final TextEditingController _controller = TextEditingController();
+  
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+  
   @override
   void didUpdateWidget(covariant _AnimatedAutocompleteField oldWidget) {
     super.didUpdateWidget(oldWidget);

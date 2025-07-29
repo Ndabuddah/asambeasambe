@@ -199,4 +199,11 @@ class _PassengerRegistrationScreenState extends State<PassengerRegistrationScree
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
 }

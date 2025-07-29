@@ -27,6 +27,13 @@ class _ChatScreenState extends State<ChatScreen> {
     _databaseService = DatabaseService();
   }
 
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty) return;
